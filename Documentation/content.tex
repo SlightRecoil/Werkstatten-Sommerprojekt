@@ -1,0 +1,111 @@
+
+    
+    
+\section{Introduction}
+
+\subsection{Group members}
+
+\subsubsection*{Odin Hasson}
+As the team leader, I oversaw the allocation of team members, ensuring that each individual was assigned tasks best suited to their expertise and the project's needs. My primary technical contributions centered on the hardware development of our project, with a particular focus on designing the foundational circuitry. Additionally, I collaborated closely with Benjamin Schalk in the co-design of the PCB, ensuring both functionality and efficiency. Beyond these core responsibilities, I provided support across various aspects of the design process and took sole responsibility for all manufacturing and implementation related to 3D printing and 3D printed components.
+
+\subsubsection*{Benjamin Schalk}
+In this project, my primary responsibility was to develop the software. In addition to the software development, I actively contributed to the hardware development, collaborating closely with Odin Hasson. I contributed heavily to the design of the PCB.
+
+\subsection{Project Overview}
+The Digital Night Observation Device (henceforth referred to as ``DNOD'' in this document) consists, at its most fundamental level, of a microcontroller, a digital display, and a NoIR camera. The microcontroller utilizes an AI chip (also known as a KPU) to process video and perform facial recognition. The camera is a simple digital unit that outputs video directly to the microcontroller board. The board processes the video signal and forwards the modified signal to the display.
+
+\subsection{Used Software}
+
+\section{Design}
+\subsection{High Level Architecture (Hardware)}
+\subsection{High Level Architecture (Software)}
+\subsection{Project Housing}
+
+\section{Production}% benni explain further 
+\subsection{Programming}
+The Sipeed M1 K210 module can be flashed using Sipeed's proprietary software known as MaixPy (with support from kflash).
+\subsubsection{SmartFaceDisplay 1.0}
+Unser SmartFaceDisplay 1.0 ist eine kompakte Lösung für die Echtzeit-Gesichtserkennung mit integrierter Kamera, KI-Modul und Display. Sobald das Gerät eingeschaltet wird, startet die Kamera und überträgt kontinuierlich Bilder an den On‑Board "KPU"-Beschleuniger. Der YOLO‑Algorithmus analysiert jedes Frame nach Gesichtern und versieht erkannte Bereiche automatisch mit farbigen Begrenzungsrahmen. Das fertige Bild inklusive dieser Markierungen wird live auf dem Display ausgegeben, während in der Ecke die aktuelle Bildrate (FPS) angezeigt wird.
+
+\subsubsubsection{Kernfunktionen}
+\begin{itemize}[left=0pt]
+  \item \textbf{Automatische Gesichtserkennung:} Bei jedem Kamerabild sucht die KI nach Gesichtern und zeichnet dafür rechteckige Rahmen.
+  \item \textbf{Live-Feedback:} Erkennungsergebnisse und Performance-Daten (Frames per Second) werden direkt auf dem integrierten LCD angezeigt.
+  \item \textbf{Einfache Inbetriebnahme:} Über die MaixPy IDE lässt sich das Python-Script schnell auf der K210-Platine ausführen, das Modell wird beim Start direkt aus dem Flash-Speicher geladen.
+\end{itemize}
+
+\subsubsubsection{Aktivierbare Zusatzfunktionen}
+\begin{itemize}[left=0pt]
+  \item \textbf{Bildfilter (Convolution):} Optional kann ein Schärfe- oder Kantenerkennungsfilter hinzugeschaltet werden (z.B. \texttt{img.conv3(edge)} oder \texttt{img.conv3(sharp)}).
+  \item \textbf{Upscaling-Modus:} Für detailreichere Anzeigen lässt sich das Bild vor der Darstellung vergrößern (\texttt{img.resize(384, 288)}), benötigt jedoch mehr RAM.
+  \item \textbf{Konfigurierbare Schwellenwerte:} Confidence- und Non-Max-Suppression-Parameter des YOLO-Algorithmus können in der Initialisierung angepasst werden, um Erkennungsgenauigkeit und -empfindlichkeit zu verändern.
+  \item \textbf{Weitere Modelle:} Statt des vorinstallierten Gesichtsmodells können auch andere YOLO-Modelle (z.B. zur Erkennung von Autokennzeichen, Objekten oder Personen in speziellen Kontexten) geladen und ausgeführt werden.
+\end{itemize}
+
+Alle diese Extras lassen sich durch Auskommentieren oder Aktivieren weniger Zeilen im Skript flexibel ein- und ausschalten. Dadurch ist das SmartFaceDisplay 1.0 nicht nur sofort einsatzbereit, sondern auch ideal zum Experimentieren und Anpassen an spezifische Anwendungsfälle - ob zur Besucherzählung, Zutrittskontrolle oder als Demonstrator für KI-basierte Bildverarbeitung.
+
+
+\subsection{Circuit Design}
+Our base circuit is derived from elements of the SIPEED Maixduino, a microcontroller built around the SIPEED M1 module. The SIPEED Maixduino is well-documented, and its complete circuit schematic is readily available online. Utilizing both the official documentation and our own technical knowledge, we designed an alternative version that retains and enhances the specific features of the Maixduino relevant to our application.
+
+% SVG figures - commented out because files don't exist
+% Replace with placeholder text or actual figures when available
+
+\subsection{Circuit Components}
+
+\subsubsection{Camera Connector Circuit}
+The camera connector circuit provides the interface between the NoIR camera module and the main processing unit. This circuit ensures proper signal integrity and power delivery to the camera module.
+
+
+
+\subsubsection{Camera Power Circuit}
+The camera power circuit manages the power supply requirements for the camera module, providing stable voltage regulation and filtering to ensure optimal image quality.
+
+\subsubsection{DAC Circuit}
+The Digital-to-Analog Converter (DAC) circuit enables the conversion of digital signals from the microcontroller to analog outputs when required.
+
+\subsubsection{DC Power Circuit}
+The DC power circuit handles the main power distribution throughout the device, ensuring all components receive appropriate voltage levels.
+
+\subsubsection{ESP32 Circuit}
+The ESP32 circuit provides wireless connectivity capabilities and additional processing power to complement the main K210 processor.
+
+\subsubsection{GPIO Circuit}
+The General Purpose Input/Output (GPIO) circuit provides expandable connection points for additional sensors or peripherals.
+
+\subsubsection{ISP Download Circuit}
+The In-System Programming (ISP) download circuit enables firmware updates and programming of the device without disassembly.
+
+\subsubsection{K210 Circuit}
+The K210 circuit forms the core of the processing system, incorporating the AI-capable microcontroller and its supporting components.
+
+\subsubsection{LCD Connector Circuit}
+The LCD connector circuit interfaces with the display module, handling both data transmission and power delivery.
+
+\subsubsection{SD Card Circuit}
+The SD card circuit provides expandable storage capabilities for the device, allowing for data logging and firmware storage.
+
+\subsubsection{USB-C Port Circuit}
+The USB-C port circuit handles both power input and data communication with external devices.
+
+\subsubsection{Miscellaneous Circuits}
+Additional supporting circuits provide various auxiliary functions such as status indicators, reset functionality, and system monitoring.
+
+\subsection{PCB Design}
+\subsection{PCB Production}
+\subsubsection{JLCPCB Manufacturing}
+\subsubsection{Use of soldering oven}
+\subsubsection{Hand soldering}
+\subsubsection{Assembly}
+
+
+\section{Feedback}
+\subsection{What went well}
+\subsection{What went bad}
+
+\section{Costs}
+
+\newpage
+\appendix
+\section{Addendum: Daniel Liew}
+Originally, our group consisted of three members. Daniel Liew disappeared after the initial week of the summer semester and never returned. Since then, he has been officially expelled. As he only attended workshop once after the begin of the summer semester and was never seen again, we removed him from the development cycle. This was not done immediately; however, after being informed of his expulsion and receiving no response to our attempts to contact him, we decided to remove him from the project.
